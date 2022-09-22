@@ -1,52 +1,58 @@
 import React, { useState, useRef } from 'react';
 import ClassCounter from './Components/ClassCounter';
 import Counter from './Components/Counter';
+import PostForm from './Components/PostForm';
 import PostItem from './Components/PostItem';
 import PostList from './Components/PostList';
 import MyButton from './Components/UI/button/MyButton';
 import MyInput from './Components/UI/input/MyInput'
+import MySelect from './Components/UI/Select/MySelect';
 import './Styles/App.css';
 
 function App() {
 
   const [posts, setPosts] = useState([
-    { id: 1, title: 'Javascript 1', body: 'description' },
-    { id: 2, title: 'Javascript 2', body: 'description' },
-    { id: 3, title: 'Javascript 3', body: 'description' },
-    { id: 4, title: 'Javascript 4', body: 'description' },
-    { id: 5, title: 'Javascript 5', body: 'description' },
+    { id: 1, title: 'aaaaaaaa', body: 'cccc' },
+    { id: 2, title: 'cccc', body: 'aaa' },
+    { id: 3, title: 'bbbb', body: 'bbbb' },
   ])
 
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const [selectedSort, setSelectedSort] = useState('')
 
-  const addNewPost = (e) => {
-    e.preventDefault();
-    const newPost = {
-      id: Date.now(),
-      title,
-      body
-    }
-    console.log(newPost);
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
+
+  const removePost = (post) => {
+    setPosts(posts.filter(p => p.id !== post.id))
+  }
+
+  const sortPosts = (sort) => {
+    setSelectedSort(sort);
+    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
   }
 
   return (
     <div className="App">
-      <form>
-        <MyInput
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          type="text"
-          placeholder='Название поста' />
-        <MyInput
-          value={body}
-          onChange={e => setBody(e.target.value)}
-          type="text"
-          placeholder='Описание поста'
+      <PostForm create={createPost} />
+      <hr style={{ margin: '15px 0' }} />
+      <div>
+        <MySelect
+          value={selectedSort}
+          onChange={sortPosts}
+          defaultValue="Сортировка"
+          options={[
+            { value: 'title', name: 'По названию' },
+            { value: 'body', name: 'По описанию' }
+          ]}
         />
-        <MyButton onClick={addNewPost}>Создать пост</MyButton>
-      </form>
-      <PostList posts={posts} title="Посты про JS" />
+      </div>
+      {posts.length !== 0
+        ?
+        <PostList remove={removePost} posts={posts} title="Посты про JS" />
+        :
+        <h1 style={{ textAlign: 'center' }}>Посты не найдены!</h1>
+      }
     </div>
   );
 }
