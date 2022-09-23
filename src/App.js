@@ -1,4 +1,6 @@
-import React, { useMemo, useState, useRef } from 'react';
+import axios from 'axios';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
+import PostService from './API/PostService';
 import ClassCounter from './Components/ClassCounter';
 import Counter from './Components/Counter';
 import PostFilter from './Components/PostFilter';
@@ -7,36 +9,35 @@ import PostItem from './Components/PostItem';
 import PostList from './Components/PostList';
 import MyButton from './Components/UI/button/MyButton';
 import MyInput from './Components/UI/input/MyInput'
+import Loader from './Components/UI/Loader/Loader';
 import MyModal from './Components/UI/MyModal/MyModal';
 import MySelect from './Components/UI/Select/MySelect';
+import { usePosts } from './hooks/usePosts';
 import './Styles/App.css';
 
 function App() {
-
-  const [posts, setPosts] = useState([
-    { id: 1, title: 'aaaaaaaa', body: 'cccc' },
-    { id: 2, title: 'cccc', body: 'aaa' },
-    { id: 3, title: 'bbbb', body: 'bbbb' },
-  ])
-
+  const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({ sort: '', query: '' })
-
   const [modal, setModal] = useState(false);
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const [isPostsLoading, setIsPostsLoading] = useState(false);
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
-    }
-    return posts;
-  }, [filter.sort, posts])
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query.toLowerCase()))
-  }, [filter.query, sortedPosts])
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
     setModal(false)
+  }
+
+  async function fetchPosts() {
+    setIsPostsLoading(true);
+    setTimeout(async () => {
+      const posts = await PostService.getAll();
+      setPosts(posts)
+      setIsPostsLoading(false);
+    }, 1000)
   }
 
   const removePost = (post) => {
@@ -45,7 +46,7 @@ function App() {
 
   return (
     <div className="App">
-      <MyButton style={{marginTop: '30px'}} onClick={() => setModal(true)}>
+      <MyButton style={{ marginTop: '30px' }} onClick={() => setModal(true)}>
         Создать пользователя
       </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
@@ -56,7 +57,10 @@ function App() {
         filter={filter}
         setFilter={setFilter}
       />
-      <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты про JS" />
+      {isPostsLoading
+        ? <div style={{display:'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
+        : <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты про JS" />
+      }
     </div>
   );
 }
