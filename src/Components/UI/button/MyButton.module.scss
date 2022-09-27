@@ -1,8 +1,13 @@
 .myBtn{
     padding: 5px 15px;
-    color: teal;
+    color: #fff;
     font-size: 14px;
-    background: transparent;
-    border: 1px solid teal;
+    background: rgb(90, 90, 255);
+    border: none;
     cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+    &:hover{
+        opacity: 0.5;
+    }
 }

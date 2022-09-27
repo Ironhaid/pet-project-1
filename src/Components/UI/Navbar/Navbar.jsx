@@ -4,7 +4,7 @@ import { AuthContext } from '../../../context/context';
 import MyButton from '../button/MyButton'
 
 const Navbar = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext);
+    const { isAuth, setIsAuth } = useContext(AuthContext);
     const logout = () => {
         setIsAuth(false);
         localStorage.removeItem('auth')
@@ -12,13 +12,21 @@ const Navbar = () => {
     return (
         <>
             <div className='navbar'>
-                <MyButton onClick ={logout}>
+                <div className='navbar__links'>
+                    <Link to='/about'>
+                        <MyButton>
+                            О сайте
+                        </MyButton>
+                    </Link>
+                    <Link to='/posts'>
+                        <MyButton>
+                            Посты
+                        </MyButton>
+                    </Link>
+                </div>
+                <MyButton onClick={logout}>
                     Выйти
                 </MyButton>
-                <div className='navbar__links'>
-                    <Link to='/about'>О сайте</Link>
-                    <Link to='/posts'>Посты</Link>
-                </div>
             </div>
             <Outlet />
         </>

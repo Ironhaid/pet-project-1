@@ -1,8 +1,9 @@
 import React from 'react'
 
-const MySelect = ({ options, defaultValue, value, onChange}) => {
+const MySelect = ({ options, defaultValue, value, onChange }) => {
     return (
         <select
+            className='posts__select'
             value={value}
             onChange={event => onChange(event.target.value)}
         >

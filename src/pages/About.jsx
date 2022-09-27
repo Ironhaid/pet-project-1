@@ -2,9 +2,11 @@ import React from 'react'
 
 const About = () => {
   return (
-    <h1>
-        Это приложение создано!
-    </h1>
+    <div className='about'>
+      <h1>
+        Раздел о сайте.
+      </h1>
+    </div>
   )
 }
 

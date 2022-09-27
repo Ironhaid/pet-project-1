@@ -14,7 +14,7 @@ const PostItem = (props) => {
             </div>
             <div className='post__btns'>
                 <MyButton onClick={() => router(`/posts/${props.post.id}`)}>
-                    Открыть пост
+                    Открыть комментарии
                 </MyButton>
                 <MyButton onClick={() => props.remove(props.post)}>
                     Удалить пост

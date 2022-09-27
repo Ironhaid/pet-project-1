@@ -11,8 +11,8 @@ const Login = () => {
         localStorage.setItem('auth', 'true')
     }
     return (
-        <div>
-            <h1>Страница для логина</h1>
+        <div className='login'>
+            <h1>Вход</h1>
             <form onSubmit={login}>
                 <MyInput type="text" placeholder="Введите логин" />
                 <MyInput type="password" placeholder="Введите пароль" />

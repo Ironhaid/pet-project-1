@@ -3,6 +3,11 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: lightgrey;
 }
 
 #root {
@@ -38,15 +43,13 @@
 }
 
 .post-enter {
-  -webkit-transform: translateX(-350px);
-          transform: translateX(-350px);
+  opacity: 0;
 }
 
 .post-enter-active {
-  -webkit-transform: translateX(0px);
-          transform: translateX(0px);
-  -webkit-transition: all 500ms ease-in;
-  transition: all 500ms ease-in;
+  opacity: 1;
+  -webkit-transition: opacity 500ms ease;
+  transition: opacity 500ms ease;
 }
 
 .post-exit {
@@ -54,10 +57,9 @@
 }
 
 .post-exit-active {
-  -webkit-transform: translateX(-350px);
-          transform: translateX(-350px);
-  -webkit-transition: all 500ms ease-in;
-  transition: all 500ms ease-in;
+  opacity: 0;
+  -webkit-transition: opacity 500ms ease;
+  transition: opacity 500ms ease;
 }
 
 .page__wrapper {
@@ -88,11 +90,15 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 0 15px;
-  background: lightgray;
+  background: #fff;
 }
 
 .navbar__links {
-  margin-left: auto;
+  margin: 0 auto;
+  max-width: 800px;
+}
+.navbar__links button:first-child {
+  margin-right: 15px;
 }
 
 .post__btns {
@@ -103,4 +109,52 @@
 }
 .post__btns button:first-child {
   margin-right: 3px;
+}
+
+.posts__select {
+  padding: 5px;
+  border-radius: 10px;
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+.login {
+  padding: 25px;
+}
+.login h1 {
+  text-align: center;
+}
+.login form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 350px;
+}
+
+.about {
+  padding: 25px;
+}
+
+.comments {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 45px;
+}
+.comments h1 {
+  font-size: 25px;
+}
+
+.comments__body {
+  margin: 5px 0;
+}
+
+.comments__main {
+  font-size: 20px;
 }

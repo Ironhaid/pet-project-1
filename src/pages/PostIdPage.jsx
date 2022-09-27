@@ -21,11 +21,16 @@ const PostIdPage = () => {
     fetchComments(params.id)
   }, [])
   return (
-    <div>
-      <h1>Вы открыли страницу поста с ID = {params.id}</h1>
+    <div className='comments'>
+      {/* <h1>Вы открыли страницу поста с ID = {params.id}</h1> */}
       {isLoading
         ? <Loader />
-        : <div>{post.id}. {post.title}</div>
+        : <div className='comments__main'>
+          {post.id}. {post.title}
+          <div className='comments__body'>
+            {post.body}
+          </div>
+        </div>
       }
       <h1>
         Комментарии
@@ -34,7 +39,7 @@ const PostIdPage = () => {
         ? <Loader />
         : <div>
           {comments.map(comm =>
-            <div key={comm.id} style={{marginTop: '15px'}}>
+            <div key={comm.id} style={{ marginTop: '15px' }}>
               <h5>{comm.email}</h5>
               <div>{comm.body}</div>
             </div>
