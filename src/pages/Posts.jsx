@@ -60,7 +60,7 @@ function Posts() {
       <MyModal visible={modal} setVisible={setModal}>
         <PostForm create={createPost} />
       </MyModal>
-      <hr style={{ margin: '15px 0' }} />
+      <div style={{ margin: '15px 0' }} />
       <PostFilter
         filter={filter}
         setFilter={setFilter}
